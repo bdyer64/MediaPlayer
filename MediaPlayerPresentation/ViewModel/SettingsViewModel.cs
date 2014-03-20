@@ -1,5 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaPlayerPresentation.ViewModel
 {
@@ -14,14 +17,21 @@ namespace MediaPlayerPresentation.ViewModel
         /// <summary>
         /// Initializes a new instance of the SettingsViewModel class.
         /// </summary>
-        public SettingsViewModel()
+        public SettingsViewModel(IEnumerable<PivotEntryViewModel> items)
         {
-            Items = new ObservableCollection<PivotEntryViewModel>();
-            PivotEntryViewModel pevm = new PivotEntryViewModel("Services", "Testing1");
-            Items.Add(pevm);
-            SelectedPivotItem = pevm;
-            pevm = new PivotEntryViewModel("Other Stuff", "Testing2");
-            Items.Add(pevm);
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            Items = new ObservableCollection<PivotEntryViewModel>(items);
+
+            if (Items.Count == 0)
+            {
+                throw new ArgumentException("items count cannot be zero");
+            }
+            
+
         }
 
         public ObservableCollection<PivotEntryViewModel> Items {get;private set;}
@@ -31,7 +41,7 @@ namespace MediaPlayerPresentation.ViewModel
         /// </summary>
         public const string TitlePropertyName = "Title";
 
-        private string _title = "Settings";
+        private string _title = "settings";
 
         /// <summary>
         /// Sets and gets the Title property.

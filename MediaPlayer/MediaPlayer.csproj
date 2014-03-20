@@ -97,6 +97,9 @@
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="GooglePlayMediaProvider.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Views\GeneralSettingsView.xaml.cs">
+      <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -110,8 +113,8 @@
     <Compile Include="Views\EditServicePage.xaml.cs">
       <DependentUpon>EditServicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PivotPage1.xaml.cs">
-      <DependentUpon>PivotPage1.xaml</DependentUpon>
+    <Compile Include="Views\ServicesSettingsView.xaml.cs">
+      <DependentUpon>ServicesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -123,6 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Views\GeneralSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -131,7 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PivotPage1.xaml">
+    <Page Include="Views\ServicesSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

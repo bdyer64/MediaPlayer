@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace MediaPlayer.Views
 {
-    public partial class PivotPage1 : PhoneApplicationPage
+    public partial class ServicesSettingsView : UserControl
     {
-        public PivotPage1()
+        public ServicesSettingsView()
         {
             InitializeComponent();
         }

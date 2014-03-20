@@ -2,6 +2,7 @@
 using MediaPlayerModel;
 using GalaSoft.MvvmLight.Command;
 using MediaPlayerPresentation.Helpers;
+using System;
 
 namespace MediaPlayerPresentation.ViewModel
 {

@@ -21,6 +21,7 @@ using System.Configuration;
 using System.Reflection;
 using System.Linq;
 using SubsonicMediaProvider;
+using MediaPlayer.Views;
 
 namespace MediaPlayer.ViewModel
 {
@@ -33,6 +34,7 @@ namespace MediaPlayer.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        // Wire up the Media Providers
         static List<IMediaProvider> GetMediaProviders()
         {
             var mediaProviders = new List<IMediaProvider>();
@@ -40,6 +42,17 @@ namespace MediaPlayer.ViewModel
             mediaProviders.Add(new SubsonicMediaProvider.SubsonicMediaProvider());
 
             return mediaProviders;
+        }
+
+        // Wire up the settings pivot view
+        static IEnumerable<PivotEntryViewModel> GetSettingsPivots()
+        {
+            var settingsPivots = new List<PivotEntryViewModel>();
+
+            settingsPivots.Add(new PivotEntryViewModel("services", typeof(ServicesSettingsView)));
+            settingsPivots.Add(new PivotEntryViewModel("general", typeof(GeneralSettingsView)));
+
+            return settingsPivots;
         }
 
         static ViewModelLocator()
@@ -60,8 +73,10 @@ namespace MediaPlayer.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EditServiceViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<ServicesSettingsViewModel>();
             SimpleIoc.Default.Register<Views.ViewNavigator>();
             SimpleIoc.Default.Register<List<IMediaProvider>>(() => GetMediaProviders());
+            SimpleIoc.Default.Register<IEnumerable<PivotEntryViewModel>>(() => GetSettingsPivots());
         }
 
         /// <summary>
@@ -91,6 +106,14 @@ namespace MediaPlayer.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<SettingsViewModel>();
+            }
+        }
+
+        public ServicesSettingsViewModel ServicesSettings
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ServicesSettingsViewModel>();
             }
         }
 

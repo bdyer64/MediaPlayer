@@ -20,7 +20,7 @@
         </DataTemplate>
         <DataTemplate x:Key="PivotItemTemplate">
             <Grid>
-                <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            	<ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Content}"/>
             </Grid>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>

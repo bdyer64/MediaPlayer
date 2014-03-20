@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using System.Windows.Controls;
+using System;
 
 namespace MediaPlayerPresentation.ViewModel
 {
@@ -13,10 +15,10 @@ namespace MediaPlayerPresentation.ViewModel
         /// <summary>
         /// Initializes a new instance of the PivotEntryViewModel class.
         /// </summary>
-        public PivotEntryViewModel(string header,string content)
+        public PivotEntryViewModel(string header, Type contentType)
         {
             Header = header;
-            Content = content;
+            ContentType = contentType;
         }
 
         /// <summary>
@@ -47,21 +49,45 @@ namespace MediaPlayerPresentation.ViewModel
         /// </summary>
         public const string ContentPropertyName = "Content";
 
-        private string _content = "";
+        private object _content;
 
         /// <summary>
         /// Sets and gets the Content property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public string Content
+        public object Content
         {
             get
             {
-                return _content;
+                return Activator.CreateInstance(ContentType);
             }
             set
             {
                 Set(ContentPropertyName, ref _content, value);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ContentType" /> property's name.
+        /// </summary>
+        public const string ContentTypePropertyName = "ContentType";
+
+        private Type _contentType;
+
+        /// <summary>
+        /// Sets and gets the ContentType property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Type ContentType
+        {
+            get
+            {
+                return _contentType;
+            }
+            set
+            {
+                RaisePropertyChanged(() => Content);
+                Set(ContentTypePropertyName, ref _contentType, value);
             }
         }
     }
