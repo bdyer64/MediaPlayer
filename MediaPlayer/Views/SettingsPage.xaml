@@ -32,7 +32,7 @@
                      ItemsSource="{Binding Items}" 
                      HeaderTemplate="{StaticResource PivotHeaderTemplate}"
                      ItemTemplate="{StaticResource PivotItemTemplate}"
-                     SelectedItem="{Binding SelectedPivotItem, Mode=TwoWay}" >
+                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
         </phone:Pivot>
     </Grid>
     

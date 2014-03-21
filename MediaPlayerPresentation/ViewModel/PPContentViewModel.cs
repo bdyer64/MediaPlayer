@@ -10,12 +10,12 @@ namespace MediaPlayerPresentation.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class PivotEntryViewModel : ViewModelBase
+    public class PPContentViewModel : ViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the PivotEntryViewModel class.
         /// </summary>
-        public PivotEntryViewModel(string header, Type contentType)
+        public PPContentViewModel(string header, Type contentType)
         {
             Header = header;
             ContentType = contentType;

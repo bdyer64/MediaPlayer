@@ -12,29 +12,15 @@ namespace MediaPlayerPresentation.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : PPViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the SettingsViewModel class.
         /// </summary>
-        public SettingsViewModel(IEnumerable<PivotEntryViewModel> items)
+        public SettingsViewModel(IEnumerable<PPContentViewModel> items) : base (items)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException("items");
-            }
-
-            Items = new ObservableCollection<PivotEntryViewModel>(items);
-
-            if (Items.Count == 0)
-            {
-                throw new ArgumentException("items count cannot be zero");
-            }
             
-
         }
-
-        public ObservableCollection<PivotEntryViewModel> Items {get;private set;}
 
         /// <summary>
         /// The <see cref="Title" /> property's name.
@@ -56,29 +42,6 @@ namespace MediaPlayerPresentation.ViewModel
             set
             {
                 Set(TitlePropertyName, ref _title, value);
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="SelectedPivotItem" /> property's name.
-        /// </summary>
-        public const string SelectedPivotItemPropertyName = "SelectedPivotItem";
-
-        private PivotEntryViewModel _selectedPivotItem;
-
-        /// <summary>
-        /// Sets and gets the SelectedPivotItem property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public PivotEntryViewModel SelectedPivotItem
-        {
-            get
-            {
-                return _selectedPivotItem;
-            }
-            set
-            {
-                Set(SelectedPivotItemPropertyName, ref _selectedPivotItem, value);
             }
         }
     }

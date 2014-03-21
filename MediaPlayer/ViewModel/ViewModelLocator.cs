@@ -45,12 +45,12 @@ namespace MediaPlayer.ViewModel
         }
 
         // Wire up the settings pivot view
-        static IEnumerable<PivotEntryViewModel> GetSettingsPivots()
+        static IEnumerable<PPContentViewModel> GetSettingsPivots()
         {
-            var settingsPivots = new List<PivotEntryViewModel>();
+            var settingsPivots = new List<PPContentViewModel>();
 
-            settingsPivots.Add(new PivotEntryViewModel("services", typeof(ServicesSettingsView)));
-            settingsPivots.Add(new PivotEntryViewModel("general", typeof(GeneralSettingsView)));
+            settingsPivots.Add(new PPContentViewModel("services", typeof(ServicesSettingsView)));
+            settingsPivots.Add(new PPContentViewModel("general", typeof(GeneralSettingsView)));
 
             return settingsPivots;
         }
@@ -76,7 +76,7 @@ namespace MediaPlayer.ViewModel
             SimpleIoc.Default.Register<ServicesSettingsViewModel>();
             SimpleIoc.Default.Register<Views.ViewNavigator>();
             SimpleIoc.Default.Register<List<IMediaProvider>>(() => GetMediaProviders());
-            SimpleIoc.Default.Register<IEnumerable<PivotEntryViewModel>>(() => GetSettingsPivots());
+            SimpleIoc.Default.Register<IEnumerable<PPContentViewModel>>(() => GetSettingsPivots());
         }
 
         /// <summary>

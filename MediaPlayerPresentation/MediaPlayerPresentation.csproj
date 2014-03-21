@@ -85,10 +85,11 @@
   <ItemGroup>
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\MVCNavigationService.cs" />
-    <Compile Include="ViewModel\PivotEntryViewModel.cs" />
+    <Compile Include="ViewModel\PPContentViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\EditServiceViewModel.cs" />
+    <Compile Include="ViewModel\PPViewModelBase.cs" />
     <Compile Include="ViewModel\ServicesSettingsViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
   </ItemGroup>
