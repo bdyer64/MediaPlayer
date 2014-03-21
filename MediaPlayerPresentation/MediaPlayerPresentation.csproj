@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\MVCNavigationService.cs" />
+    <Compile Include="ViewModel\HomeMainViewModel.cs" />
     <Compile Include="ViewModel\PPContentViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

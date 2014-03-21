@@ -17,7 +17,7 @@ namespace MediaPlayerPresentation.ViewModel
         /// <summary>
         /// Initializes a new instance of the SettingsViewModel class.
         /// </summary>
-        public SettingsViewModel(IEnumerable<PPContentViewModel> items) : base (items)
+        public SettingsViewModel()
         {
             
         }

@@ -44,17 +44,6 @@ namespace MediaPlayer.ViewModel
             return mediaProviders;
         }
 
-        // Wire up the settings pivot view
-        static IEnumerable<PPContentViewModel> GetSettingsPivots()
-        {
-            var settingsPivots = new List<PPContentViewModel>();
-
-            settingsPivots.Add(new PPContentViewModel("services", typeof(ServicesSettingsView)));
-            settingsPivots.Add(new PPContentViewModel("general", typeof(GeneralSettingsView)));
-
-            return settingsPivots;
-        }
-
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -71,12 +60,12 @@ namespace MediaPlayer.ViewModel
     
             SimpleIoc.Default.Register<INavigationService, MVCNavigationService>();
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<HomeMainViewModel>();
             SimpleIoc.Default.Register<EditServiceViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
             SimpleIoc.Default.Register<ServicesSettingsViewModel>();
             SimpleIoc.Default.Register<Views.ViewNavigator>();
             SimpleIoc.Default.Register<List<IMediaProvider>>(() => GetMediaProviders());
-            SimpleIoc.Default.Register<IEnumerable<PPContentViewModel>>(() => GetSettingsPivots());
         }
 
         /// <summary>
@@ -90,6 +79,14 @@ namespace MediaPlayer.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public HomeMainViewModel HomeMain
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HomeMainViewModel>();
             }
         }
 

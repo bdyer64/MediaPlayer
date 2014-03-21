@@ -3,6 +3,7 @@ using MediaPlayerModel;
 using GalaSoft.MvvmLight.Command;
 using MediaPlayerPresentation.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace MediaPlayerPresentation.ViewModel
 {
@@ -12,7 +13,7 @@ namespace MediaPlayerPresentation.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : PPViewModelBase
     {
         private readonly IMediaPlayerService _dataService;
         private readonly INavigationService _navigationService;
@@ -20,33 +21,30 @@ namespace MediaPlayerPresentation.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IMediaPlayerService dataService,INavigationService navigationService)
+        public MainViewModel()
         {
-            _dataService = dataService;
-            _navigationService = navigationService;
         }
 
-        private RelayCommand _navigateToSettingsCommand;
+        /// <summary>
+        /// The <see cref="AppName" /> property's name.
+        /// </summary>
+        public const string AppNamePropertyName = "AppName";
 
-        public RelayCommand NavigateToSettingsCommand
+        private string _appName = "media player";
+
+        /// <summary>
+        /// Sets and gets the AppName property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string AppName
         {
             get
             {
-                return _navigateToSettingsCommand
-                  ?? (_navigateToSettingsCommand = new RelayCommand(
-                    () => _navigationService.Navigate("SettingsPage")));
+                return _appName;
             }
-        }
-
-        private RelayCommand _navigateToMusicCommand;
-
-        public RelayCommand NavigateToMusicCommand
-        {
-            get
+            set
             {
-                return _navigateToMusicCommand
-                  ?? (_navigateToMusicCommand = new RelayCommand(
-                    () => _navigationService.Navigate("MusicPage")));
+                Set(AppNamePropertyName, ref _appName, value);
             }
         }
 

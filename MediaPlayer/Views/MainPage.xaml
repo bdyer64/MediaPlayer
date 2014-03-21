@@ -7,101 +7,55 @@
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" x:Class="MediaPlayer.Views.MainPage"
+                            xmlns:my="clr-namespace:MediaPlayer.Views"
                             mc:Ignorable="d ignore"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True"
     
                             >
-	<phone:PhoneApplicationPage.Resources>
-		<Style x:Key="ButtonStyle1" TargetType="Button">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Grid x:Name="grid" RenderTransformOrigin="0.5,0.5">
-							<Grid.RenderTransform>
-								<CompositeTransform/>
-							</Grid.RenderTransform>
-							<Grid.Projection>
-								<PlaneProjection/>
-							</Grid.Projection>
-							<VisualStateManager.VisualStateGroups>
-								<VisualStateGroup x:Name="CommonStates">
-									<VisualStateGroup.Transitions>
-										<VisualTransition GeneratedDuration="0">
-											<Storyboard>
-												<DoubleAnimation Duration="0:0:0.2" To="5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-												<DoubleAnimation Duration="0:0:0.2" To="5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-											</Storyboard>
-										</VisualTransition>
-									</VisualStateGroup.Transitions>
-									<VisualState x:Name="Pressed">
-										<Storyboard>
-											<DoubleAnimation Duration="0" To="5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-											<DoubleAnimation Duration="0" To="5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="Normal"/>
-									<VisualState x:Name="Disabled"/>
-									<VisualState x:Name="MouseOver"/>
-								</VisualStateGroup>
-							</VisualStateManager.VisualStateGroups>
-							<ContentPresenter/>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}"/>
-            <Setter Property="FontFamily" Value="Segoe WP SemiLight" />
-            <Setter Property="Margin" Value="12,0,0,0" />
-		</Style>
-	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}"/>
+    </phone:PhoneApplicationPage.DataContext>
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
 
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneForegroundBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
-	<phone:PhoneApplicationPage.DataContext>
-		<Binding Path="Main" Source="{StaticResource Locator}"/>
-	</phone:PhoneApplicationPage.DataContext>
-<!--LayoutRoot is the root grid where all page content is placed-->
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="PanoramaHeaderTemplate">
+            <ContentControl Content="{Binding Header}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="PanoramaItemTemplate">
+            <Grid>
+                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Content}"/>
+            </Grid>
+        </DataTemplate>
+        <Style TargetType="phone:PanoramaItem">
+            <Setter Property="CacheMode" Value="{x:Null}"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<phone:Panorama HorizontalAlignment="Left" Title="media player" VerticalAlignment="Top">
-			<phone:PanoramaItem CacheMode="{x:Null}" Header="home">
-				<phone:PanoramaItem.RenderTransform>
-					<TranslateTransform/>
-				</phone:PanoramaItem.RenderTransform>
-				<Grid>
-					<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="494" Width="420">
-						<Button Content="music" Style="{StaticResource ButtonStyle1}" HorizontalAlignment="Left" Width="408" >
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<i:InvokeCommandAction Command="{Binding NavigateToMusicCommand, Mode=OneWay}"/>
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</Button>
-						<Button Content="settings" Style="{StaticResource ButtonStyle1}" HorizontalAlignment="Left" Width="408" >
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<i:InvokeCommandAction Command="{Binding NavigateToSettingsCommand, Mode=OneWay}"/>
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</Button>
-					</StackPanel>
-				</Grid>
-			</phone:PanoramaItem>
-			<phone:PanoramaItem CacheMode="{x:Null}" Header="item2">
-				<phone:PanoramaItem.RenderTransform>
-					<TranslateTransform/>
-				</phone:PanoramaItem.RenderTransform>
-				<Grid/>
-			</phone:PanoramaItem>
-		</phone:Panorama>
+		<phone:Panorama 
+            HorizontalAlignment="Left" 
+            Title="{Binding AppName}" 
+            VerticalAlignment="Top"
+            ItemsSource="{Binding Items}" 
+            HeaderTemplate="{StaticResource PanoramaHeaderTemplate}"
+            ItemTemplate="{StaticResource PanoramaItemTemplate}">
+        </phone:Panorama>
 	</Grid>
 
 </phone:PhoneApplicationPage>

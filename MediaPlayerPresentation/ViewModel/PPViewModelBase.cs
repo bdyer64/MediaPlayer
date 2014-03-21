@@ -16,22 +16,11 @@ namespace MediaPlayerPresentation.ViewModel
         /// <summary>
         /// Initializes a new instance of the PPViewModelBase class.
         /// </summary>
-        public PPViewModelBase(IEnumerable<PPContentViewModel> items)
+        public PPViewModelBase()
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException("items");
-            }
-
-            Items = new ObservableCollection<PPContentViewModel>(items);
-
-            if (Items.Count == 0)
-            {
-                throw new ArgumentException("items count cannot be zero");
-            }
         }
 
-        public ObservableCollection<PPContentViewModel> Items { get; private set; }
+        public ObservableCollection<PPContentViewModel> Items { get; set; }
 
         /// <summary>
         /// The <see cref="SelectedPivotItem" /> property's name.
