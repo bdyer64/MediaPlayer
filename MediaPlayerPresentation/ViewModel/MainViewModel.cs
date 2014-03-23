@@ -15,9 +15,6 @@ namespace MediaPlayerPresentation.ViewModel
     /// </summary>
     public class MainViewModel : PPViewModelBase
     {
-        private readonly IMediaPlayerService _dataService;
-        private readonly INavigationService _navigationService;
-
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>

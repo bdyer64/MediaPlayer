@@ -7,5 +7,7 @@ namespace MediaPlayerModel
 {
     public interface IMediaPlayerService
     {
+        IEnumerable<ServiceInfo> GetMediaServices();
+        bool UpdateService(Service serviceInfo);
     }
 }

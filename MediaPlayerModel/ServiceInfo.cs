@@ -10,5 +10,10 @@ namespace MediaPlayerModel
         public bool RequiresServerName { get; set; }
         public string ServiceName { get; set; }
         public byte[] ImageData { get; set; }
+
+        public Service CreateNewService()
+        {
+            return new Service();
+        }
     }
 }

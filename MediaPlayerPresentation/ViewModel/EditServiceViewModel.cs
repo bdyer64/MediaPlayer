@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using MediaPlayerPresentation.Helpers;
 using MediaPlayerModel;
+using System.Threading.Tasks;
 
 namespace MediaPlayerPresentation.ViewModel
 {
@@ -11,16 +12,34 @@ namespace MediaPlayerPresentation.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class EditServiceViewModel : ViewModelBase
+    public class EditServiceViewModel : ViewModelBase, INavigable
     {
+        private readonly Service service;
         /// <summary>
         /// Initializes a new instance of the SettingsViewModel class.
         /// </summary>
-        public EditServiceViewModel()
+        public EditServiceViewModel(Service service)
         {
-            // Need ServerModel here
+            this.service = service;
         }
 
+        #region INavigable interface method
+        public void Activate(object parameter)
+        {
+
+        }
+
+        public void Deactivate(object parameter)
+        {
+            service.ServiceName = this.ServerName;
+            service.ServerURL = this.ServerAddress;
+            service.Password = this.Password;
+            service.UserName = this.UserName;
+            service.Save();
+        }
+        #endregion
+
+        #region TestConnectionCommand
         private RelayCommand _testConnection;
 
         /// <summary>
@@ -32,29 +51,23 @@ namespace MediaPlayerPresentation.ViewModel
             {
                 return _testConnection
                     ?? (_testConnection = new RelayCommand(
-                                          () =>
+                                          async () =>
                                           {
-                                              TestServerConnection();
+                                              await TestServerConnection();
                                           }));
             }
         }
 
         private bool _testing = false;
 
-        private void TestServerConnection()
+        private async Task TestServerConnection()
         {
-            if (!_testing)
-            {
-                ButtonText = "Cancel Test";
-                _testing = true;
-            }
-            else
-            {
-                ButtonText = "Test Connection";
-                _testing = false;
-            }
+            ButtonText = "Cancel Test";
+            await service.TestConnection();
+            ButtonText = "Test Connection";
         }
-
+        #endregion
+        #region ServerName Property
         /// <summary>
         /// The <see cref="ServerName" /> property's name.
         /// </summary>
@@ -74,10 +87,11 @@ namespace MediaPlayerPresentation.ViewModel
             }
             set
             {
-                Set(ServerNamePropertyName, ref _serverName, value);
+                Set(() => ServerName, ref _serverName, value);
             }
         }
-
+        #endregion
+        #region ServerAddress Property
         /// <summary>
         /// The <see cref="ServerAddress" /> property's name.
         /// </summary>
@@ -100,7 +114,8 @@ namespace MediaPlayerPresentation.ViewModel
                 Set(ServerAddressPropertyName, ref _serverAddress, value);
             }
         }
-
+        #endregion
+        #region UserName Property
         /// <summary>
         /// The <see cref="UserName" /> property's name.
         /// </summary>
@@ -123,7 +138,9 @@ namespace MediaPlayerPresentation.ViewModel
                 Set(UserNamePropertyName, ref _userName, value);
             }
         }
-
+        
+        #endregion
+        #region Password Property
         /// <summary>
         /// The <see cref="Password" /> property's name.
         /// </summary>
@@ -145,8 +162,9 @@ namespace MediaPlayerPresentation.ViewModel
             {
                 Set(PasswordPropertyName, ref _password, value);
             }
-        }
-
+        } 
+        #endregion
+        #region ButtonText Property
         /// <summary>
         /// The <see cref="ButtonText" /> property's name.
         /// </summary>
@@ -168,6 +186,7 @@ namespace MediaPlayerPresentation.ViewModel
             {
                 Set(ButtonTextPropertyName, ref _buttonText, value);
             }
-        }
+        } 
+        #endregion
     }
 }

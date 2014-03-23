@@ -23,5 +23,10 @@ namespace MediaPlayerModel
         {
             return (from ms in mediaProviders select ms.GetServiceInfo()).ToList();
         }
+
+        public bool UpdateService(Service serviceInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

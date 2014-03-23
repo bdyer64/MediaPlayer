@@ -83,6 +83,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Helpers\INavigable.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\MVCNavigationService.cs" />
     <Compile Include="ViewModel\HomeMainViewModel.cs" />
@@ -118,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -8,10 +8,11 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MediaPlayer.Resources;
+using MediaPlayer.Helpers;
 
 namespace MediaPlayer.Views
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : BindablePage
     {
         // Constructor
         public MainPage()
