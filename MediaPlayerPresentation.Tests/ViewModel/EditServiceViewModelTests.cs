@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MediaPlayerModel;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MediaPlayerPresentation.Tests.ViewModel
 {
@@ -142,22 +143,80 @@ namespace MediaPlayerPresentation.Tests.ViewModel
         public void TestConnectionCommandSwitchesButtonText()
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            object lock1 = new object();
 
             var mock = new Mock<Service>();
-            mock.Setup(m => m.TestConnection()).Returns(() => Task<bool>.Factory.StartNew(() => true));
+            mock.Setup(m => m.TestConnection()).Returns(() => Task<bool>.Factory.StartNew(() =>
+                { lock (lock1) { Monitor.Wait(lock1); return true; } }));
 
             var sut = fixture.Build<EditServiceViewModel>()
                     .FromFactory(() => new EditServiceViewModel(mock.Object))
                     .OmitAutoProperties().Create<EditServiceViewModel>();
 
-            string propName = "";
+            bool buttonTextChanged = false;
             object changedObject = null;
 
-            sut.PropertyChanged += (o, e) => { changedObject = o; propName = e.PropertyName; };
+            sut.PropertyChanged += (o, e) => 
+                { changedObject = o; if("ButtonText" == e.PropertyName) buttonTextChanged = true; };
 
             sut.TestConnection.Execute(new object());
 
-            Assert.AreEqual("ButtonText", propName);
+            Assert.AreEqual(true,buttonTextChanged);
+            buttonTextChanged = false;
+            Assert.AreEqual("Cancel Test", sut.ButtonText);
+            lock (lock1)
+            {
+                sut.PropertyChanged += (o, e) => { lock (fixture) { Monitor.Pulse(fixture); } };
+                Monitor.Pulse(lock1);
+            }
+            lock (fixture)
+            {   
+                Monitor.Wait(fixture);
+            }
+
+            Assert.AreEqual(true, buttonTextChanged);
+            Assert.AreEqual("Test Connection", sut.ButtonText);
+        }
+
+        [TestMethod]
+        public void TestConnectionCommandSwitchesStatusVisible()
+        {
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            object lock1 = new object();
+            object lock2 = new object();
+
+            var mock = new Mock<Service>();
+            mock.Setup(m => m.TestConnection()).Returns(() => Task<bool>.Factory.StartNew(() =>
+            { lock (lock1) { Monitor.Wait(lock1); return true; } }));
+
+            var sut = fixture.Build<EditServiceViewModel>()
+                    .FromFactory(() => new EditServiceViewModel(mock.Object))
+                    .OmitAutoProperties().Create<EditServiceViewModel>();
+
+            object changedObject = null;
+            bool showStatusChanged = false;
+
+            sut.PropertyChanged += (o, e) =>
+            { changedObject = o; if ("ShowStatus" == e.PropertyName) showStatusChanged = true; };
+
+            sut.TestConnection.Execute(new object());
+
+            Assert.AreEqual(true,showStatusChanged);
+            Assert.AreEqual(true, sut.ShowStatus);
+
+            lock (lock1)
+            {
+                sut.PropertyChanged += (o, e) => { if (e.PropertyName == "ShowStatus") 
+                {lock (lock2) { Monitor.Pulse(lock2); }} };
+                Monitor.Pulse(lock1);
+            }
+            lock (lock2)
+            {
+                Monitor.Wait(lock2);
+            }
+
+            Assert.AreEqual(true, showStatusChanged);
+            Assert.AreEqual(false, sut.ShowStatus);
         }
     }
 }

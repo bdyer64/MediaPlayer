@@ -58,13 +58,13 @@ namespace MediaPlayerPresentation.ViewModel
             }
         }
 
-        private bool _testing = false;
-
         private async Task TestServerConnection()
         {
             ButtonText = "Cancel Test";
+            ShowStatus = true;
             await service.TestConnection();
             ButtonText = "Test Connection";
+            ShowStatus = false;
         }
         #endregion
         #region ServerName Property
@@ -187,6 +187,38 @@ namespace MediaPlayerPresentation.ViewModel
                 Set(ButtonTextPropertyName, ref _buttonText, value);
             }
         } 
+        #endregion
+        #region ShowStatus Property
+        /// <summary>
+        /// The <see cref="ShowStatus" /> property's name.
+        /// </summary>
+        public const string ShowStatusPropertyName = "ShowStatus";
+
+        private bool _showstatus = false;
+
+        /// <summary>
+        /// Sets and gets the ShowStatus property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool ShowStatus
+        {
+            get
+            {
+                return _showstatus;
+            }
+
+            set
+            {
+                if (_showstatus == value)
+                {
+                    return;
+                }
+
+                RaisePropertyChanging(() => ShowStatus);
+                _showstatus = value;
+                RaisePropertyChanged(() => ShowStatus);
+            }
+        }
         #endregion
     }
 }
